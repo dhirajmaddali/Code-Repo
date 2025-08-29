@@ -1,0 +1,36 @@
+name: 🚀 Deploy HTML to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Deploy whenever you push to main
+
+permissions:
+  contents: write  # Required for GitHub Pages deployment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛎️ Checkout repository
+        uses: actions/checkout@v4
+
+      # (Optional) Cache dependencies if you use npm/yarn
+      # - name: Cache Node.js modules
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-
+
+      # If you only have plain HTML/CSS/JS, skip build step
+      # Otherwise, add your build commands here (npm install, npm run build, etc.)
+
+      - name: 🚀 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages   # Deployment branch
+          publish_dir: ./            # Folder to publish (root = ./)
